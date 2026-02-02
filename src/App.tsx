@@ -7,6 +7,7 @@ import { useKeyboardShortcuts, type KeyboardAction } from './hooks/useKeyboardSh
 import { useThemeMode, type ThemeMode } from './hooks/useThemeMode'
 import { useOnlineStatus } from './hooks/useOnlineStatus'
 import { useInstallPrompt } from './hooks/useInstallPrompt'
+import { useIsMobile } from './hooks/useIsMobile'
 import { OfflineIndicator } from './components/OfflineIndicator'
 import { InstallBanner } from './components/InstallBanner'
 import { UpdateNotification } from './components/UpdateNotification'
@@ -40,6 +41,7 @@ function App() {
   const themeMode = useThemeMode()
   const onlineStatus = useOnlineStatus()
   const installPrompt = useInstallPrompt()
+  const isMobile = useIsMobile()
   const {
     rulePreset, home, away, currentPeriod, gameTime, shotClock, isRunning, isGameEnded, isOvertime,
     possession, events, history, savedGames,
@@ -64,6 +66,7 @@ function App() {
   const [newPlayerName, setNewPlayerName] = useState('')
   const [addingPlayerTeam, setAddingPlayerTeam] = useState<TeamSide | null>(null)
   const [, setForcePenaltyUpdate] = useState(0)
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false)
   const timerRef = useRef<number | null>(null)
   const scoreboardRef = useRef<HTMLDivElement>(null)
   const prevScoreRef = useRef({ home: home.score, away: away.score })
@@ -340,25 +343,75 @@ function App() {
 
       {/* Quick Action Bar */}
       <div className="quick-action-bar">
-        <div className="quick-action-left">
-          <span className="quick-action-title">🥍 Lacrosse Scoreboard</span>
-        </div>
-        <div className="quick-action-controls">
-          <button className="header-btn icon-btn" onClick={() => window.open('/obs', '_blank')} title="OBS Overlay" tabIndex={-1}>
-            🎬
-          </button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('overlay-theme')} title="Overlay Theme" tabIndex={-1}>
-            🎨
-          </button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('sync')} title="Live Sync" tabIndex={-1}>
-            {roomStore.isConnected ? '🔴' : '📡'}
-          </button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('export')} title="Export" tabIndex={-1}>💾</button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('players')} title="Players" tabIndex={-1}>👥</button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('timeline')} title="Timeline" tabIndex={-1}>📋</button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('history')} title="History" tabIndex={-1}>📊</button>
-          <button className="header-btn icon-btn" onClick={() => setActiveModal('shortcuts')} title="Keyboard Shortcuts" tabIndex={-1}>⌨️</button>
-          <button className="header-btn" onClick={() => setActiveModal('settings')}>Settings</button>
+        <div className="quick-action-bar-inner">
+          <div className="quick-action-left">
+            <span className="quick-action-title">🥍 Lacrosse Scoreboard</span>
+          </div>
+          <div className="quick-action-controls">
+            {/* Always visible: Settings, Sync, Players */}
+            <button className="header-btn" onClick={() => setActiveModal('settings')}>Settings</button>
+            <button className="header-btn icon-btn" onClick={() => setActiveModal('sync')} title="Live Sync" tabIndex={-1}>
+              {roomStore.isConnected ? '🔴' : '📡'}
+            </button>
+            <button className="header-btn icon-btn" onClick={() => setActiveModal('players')} title="Players" tabIndex={-1}>👥</button>
+
+            {/* Desktop: Show all buttons */}
+            {!isMobile && (
+              <>
+                <button className="header-btn icon-btn" onClick={() => setActiveModal('timeline')} title="Timeline" tabIndex={-1}>📋</button>
+                <button className="header-btn icon-btn" onClick={() => setActiveModal('export')} title="Export" tabIndex={-1}>💾</button>
+                <button className="header-btn icon-btn" onClick={() => setActiveModal('history')} title="History" tabIndex={-1}>📊</button>
+                <button className="header-btn icon-btn" onClick={() => window.open('/obs', '_blank')} title="OBS Overlay" tabIndex={-1}>
+                  🎬
+                </button>
+                <button className="header-btn icon-btn" onClick={() => setActiveModal('overlay-theme')} title="Overlay Theme" tabIndex={-1}>
+                  🎨
+                </button>
+                <button className="header-btn icon-btn shortcuts-btn-desktop" onClick={() => setActiveModal('shortcuts')} title="Keyboard Shortcuts" tabIndex={-1}>⌨️</button>
+              </>
+            )}
+
+            {/* Mobile: More menu */}
+            {isMobile && (
+              <div className="more-menu-container">
+                <button
+                  className="header-btn icon-btn"
+                  onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+                  title="More"
+                  tabIndex={-1}
+                >
+                  ⋯
+                </button>
+                {moreMenuOpen && (
+                  <>
+                    <div className="more-menu-backdrop" onClick={() => setMoreMenuOpen(false)} />
+                    <div className="more-menu-dropdown">
+                      <button className="more-menu-item" onClick={() => { setActiveModal('timeline'); setMoreMenuOpen(false); }}>
+                        <span className="more-menu-item-icon">📋</span>
+                        Timeline
+                      </button>
+                      <button className="more-menu-item" onClick={() => { setActiveModal('export'); setMoreMenuOpen(false); }}>
+                        <span className="more-menu-item-icon">💾</span>
+                        Export
+                      </button>
+                      <button className="more-menu-item" onClick={() => { setActiveModal('history'); setMoreMenuOpen(false); }}>
+                        <span className="more-menu-item-icon">📊</span>
+                        History
+                      </button>
+                      <button className="more-menu-item" onClick={() => { window.open('/obs', '_blank'); setMoreMenuOpen(false); }}>
+                        <span className="more-menu-item-icon">🎬</span>
+                        OBS Overlay
+                      </button>
+                      <button className="more-menu-item" onClick={() => { setActiveModal('overlay-theme'); setMoreMenuOpen(false); }}>
+                        <span className="more-menu-item-icon">🎨</span>
+                        Overlay Theme
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

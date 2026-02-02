@@ -237,8 +237,8 @@ export function TutorialPage() {
           </section>
         ))}
 
-        {/* Keyboard shortcuts */}
-        <section className="mb-10">
+        {/* Keyboard shortcuts - Hidden on mobile */}
+        <section className="mb-10 hidden md:block">
           <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
             ⌨️ {keyboard.title}
           </h2>
