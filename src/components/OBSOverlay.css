@@ -1,0 +1,1042 @@
+/* OBS Overlay Base */
+.obs-page {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.obs-overlay {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+.obs-overlay.transparent {
+  background: transparent;
+}
+
+/* ============================================
+   Connection Status Indicator
+   ============================================ */
+.connection-status {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+}
+
+.connection-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.connection-status.live .connection-dot {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.connection-status.live .connection-label {
+  color: #22c55e;
+}
+
+.connection-status.syncing .connection-dot {
+  background: #eab308;
+  animation: syncPulse 0.5s ease-in-out infinite;
+}
+
+.connection-status.syncing .connection-label {
+  color: #eab308;
+}
+
+.connection-status.offline .connection-dot {
+  background: #6b7280;
+}
+
+.connection-status.offline .connection-label {
+  color: #9ca3af;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #22c55e; }
+  50% { opacity: 0.7; box-shadow: 0 0 12px #22c55e; }
+}
+
+@keyframes syncPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ============================================
+   Goal Celebration Animation
+   ============================================ */
+@keyframes goalPulse {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.4); }
+  30% { transform: scale(1.1); }
+  45% { transform: scale(1.3); }
+  60% { transform: scale(1.05); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes goalGlow {
+  0%, 100% { filter: brightness(1); }
+  25% { filter: brightness(1.5); }
+  50% { filter: brightness(1.2); }
+  75% { filter: brightness(1.4); }
+}
+
+@keyframes teamFlash {
+  0%, 100% { filter: brightness(1); }
+  10%, 30%, 50% { filter: brightness(1.4); }
+  20%, 40% { filter: brightness(1); }
+}
+
+.goal-animation {
+  animation: goalPulse 1.5s ease-out, goalGlow 1.5s ease-out;
+}
+
+.goal-team-flash {
+  animation: teamFlash 1s ease-out;
+}
+
+/* Confetti effect */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.confetti {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle, currentColor 2px, transparent 2px),
+    radial-gradient(circle, currentColor 3px, transparent 3px),
+    radial-gradient(circle, currentColor 2px, transparent 2px);
+  background-size: 60px 60px, 80px 80px, 100px 100px;
+  background-position: 0 0, 30px 30px, 60px 60px;
+  animation: confettiFall 3s ease-out forwards;
+  opacity: 0.8;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(200%) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   Team Logo
+   ============================================ */
+.team-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.team-logo-sm {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Stats Row
+   ============================================ */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Minimal Style */
+.obs-overlay.minimal {
+  padding: 12px 24px;
+}
+
+.minimal-score {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 12px 24px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  font-size: 24px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.minimal-team {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.minimal-points {
+  font-size: 32px;
+  color: #fff;
+  min-width: 40px;
+  text-align: center;
+}
+
+.minimal-separator {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+}
+
+/* Scorebug Style (Default) */
+.obs-overlay.scorebug {
+  padding: 16px;
+}
+
+.scorebug-container {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  min-width: 320px;
+}
+
+.scorebug-team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(26, 26, 46, 0.95);
+  position: relative;
+}
+
+.scorebug-team:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scorebug-color {
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.scorebug-name {
+  flex: 1;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-left: 8px;
+}
+
+.scorebug-score {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  min-width: 40px;
+  text-align: right;
+}
+
+.scorebug-possession {
+  color: #4ade80;
+  font-size: 20px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.scorebug-time-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(15, 15, 30, 0.95);
+  gap: 12px;
+}
+
+.scorebug-period {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.scorebug-time {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+.scorebug-shot {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60a5fa;
+  padding: 2px 8px;
+  background: rgba(96, 165, 250, 0.15);
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.scorebug-shot.warning {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.2);
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.scorebug-powerplay {
+  padding: 6px 16px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.scorebug-powerplay.home {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+.scorebug-powerplay.away {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+}
+
+.scorebug-powerplay.even {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+}
+
+/* Fullwidth Style */
+.obs-overlay.fullwidth {
+  width: 100vw;
+  padding: 0;
+}
+
+.fullwidth-bar {
+  display: flex;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.fullwidth-team {
+  display: flex;
+  align-items: center;
+  padding: 12px 32px;
+  flex: 1;
+  gap: 16px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.fullwidth-team.home {
+  justify-content: flex-start;
+}
+
+.fullwidth-team.away {
+  justify-content: flex-end;
+}
+
+.fullwidth-name {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fullwidth-score {
+  font-size: 36px;
+  font-weight: 900;
+  min-width: 50px;
+  text-align: center;
+}
+
+.fullwidth-center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background: rgba(15, 15, 30, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fullwidth-period {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.fullwidth-time {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+
+.fullwidth-shot {
+  font-size: 20px;
+  font-weight: 700;
+  color: #60a5fa;
+  padding: 4px 12px;
+  background: rgba(96, 165, 250, 0.15);
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fullwidth-shot.warning {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.2);
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+.fullwidth-powerplay {
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fff;
+}
+
+.fullwidth-powerplay.home {
+  background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+}
+
+.fullwidth-powerplay.away {
+  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+}
+
+.fullwidth-powerplay.even {
+  background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+}
+
+/* ============================================
+   Scorebug Stats Extension
+   ============================================ */
+.scorebug-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 16px;
+  background: rgba(10, 10, 25, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   ESPN Style - Horizontal three-segment
+   ============================================ */
+.obs-overlay.espn {
+  padding: 16px;
+}
+
+.espn-container {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.espn-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  position: relative;
+}
+
+.espn-team.home {
+  padding-left: 0;
+}
+
+.espn-team.away {
+  padding-right: 0;
+}
+
+.espn-color {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+}
+
+.espn-team.home .espn-color {
+  left: 0;
+}
+
+.espn-team.away .espn-color {
+  right: 0;
+}
+
+.espn-abbrev {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-left: 12px;
+}
+
+.espn-team.away .espn-abbrev {
+  padding-left: 0;
+  padding-right: 12px;
+}
+
+.espn-score {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  min-width: 36px;
+  text-align: center;
+}
+
+.espn-possession {
+  width: 8px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.espn-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.espn-period {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  text-transform: uppercase;
+}
+
+.espn-time {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.espn-shot {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60a5fa;
+  padding: 2px 8px;
+  background: rgba(96, 165, 250, 0.15);
+  border-radius: 4px;
+}
+
+.espn-shot.warning {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.2);
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+.espn-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0 0 6px 6px;
+  margin-top: 2px;
+}
+
+.espn-powerplay {
+  margin-top: 4px;
+  padding: 4px 16px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.espn-powerplay.home {
+  background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.espn-powerplay.away {
+  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+/* ============================================
+   Fox Sports Style - L-shaped corner gradient
+   ============================================ */
+.obs-overlay.fox {
+  padding: 16px;
+}
+
+.fox-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.95) 0%, rgba(10, 10, 20, 0.98) 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+.fox-team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, var(--team-color) 0%, transparent 4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fox-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 100px;
+}
+
+.fox-score {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  min-width: 40px;
+  text-align: right;
+}
+
+.fox-time-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.fox-period {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.fox-time {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.fox-shot {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60a5fa;
+}
+
+.fox-shot.warning {
+  color: #f87171;
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+.fox-powerplay {
+  padding: 6px 20px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.fox-powerplay.home {
+  background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+}
+
+.fox-powerplay.away {
+  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+}
+
+/* ============================================
+   College Style - Clean and minimal
+   ============================================ */
+.obs-overlay.college {
+  padding: 16px;
+}
+
+.college-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+
+.college-team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #fff;
+  position: relative;
+}
+
+.college-team:first-child {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.college-color {
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.college-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 100px;
+  padding-left: 8px;
+}
+
+.college-score {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  min-width: 36px;
+  text-align: right;
+}
+
+.college-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #1f2937;
+  color: #fff;
+}
+
+.college-period {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.college-clock {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.college-shot {
+  font-size: 14px;
+  font-weight: 700;
+  color: #60a5fa;
+}
+
+.college-shot.warning {
+  color: #f87171;
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+/* ============================================
+   Ticker Style - Bottom scrolling bar
+   ============================================ */
+.obs-overlay.ticker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  padding: 0;
+}
+
+.ticker-bar {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
+  padding: 10px 24px;
+  border-top: 3px solid #ef4444;
+}
+
+.ticker-bar .connection-status {
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-right: 16px;
+}
+
+.ticker-game {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.ticker-team {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ticker-score {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.ticker-vs {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ticker-divider {
+  color: rgba(255, 255, 255, 0.2);
+  margin: 0 8px;
+}
+
+.ticker-period {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.ticker-time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ticker-shot {
+  font-size: 14px;
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.ticker-shot.warning {
+  color: #f87171;
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+.ticker-powerplay {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.ticker-powerplay.home {
+  background: #dc2626;
+}
+
+.ticker-powerplay.away {
+  background: #2563eb;
+}
+
+/* ============================================
+   Sidebar Style - Vertical left/right edge
+   ============================================ */
+.obs-overlay.sidebar {
+  padding: 16px;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  min-width: 140px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border-left: 4px solid transparent;
+  background: rgba(26, 26, 46, 0.95);
+}
+
+.sidebar-team:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.sidebar-score {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.sidebar-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(15, 15, 30, 0.95);
+  gap: 4px;
+}
+
+.sidebar-period {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.sidebar-clock {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar-shot {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60a5fa;
+}
+
+.sidebar-shot.warning {
+  color: #f87171;
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+.sidebar-powerplay {
+  padding: 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.sidebar-powerplay.home {
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+}
+
+.sidebar-powerplay.away {
+  background: linear-gradient(180deg, #2563eb 0%, #1e40af 100%);
+}
+
+/* ============================================
+   Fullwidth Stats Extension
+   ============================================ */
+.fullwidth-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 32px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fullwidth-name {
+    font-size: 16px;
+  }
+
+  .fullwidth-score {
+    font-size: 28px;
+  }
+
+  .fullwidth-time {
+    font-size: 20px;
+  }
+
+  .fullwidth-center {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+
+  .espn-abbrev {
+    font-size: 12px;
+  }
+
+  .espn-score {
+    font-size: 22px;
+  }
+
+  .espn-time {
+    font-size: 18px;
+  }
+
+  .fox-name {
+    font-size: 13px;
+    min-width: 80px;
+  }
+
+  .fox-score {
+    font-size: 22px;
+  }
+}

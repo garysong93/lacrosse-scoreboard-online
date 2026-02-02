@@ -1,0 +1,332 @@
+/* Mobile Control - Touch-optimized interface */
+
+.mobile-control {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 16px;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Header */
+.mc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.mc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.mc-connection {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.mc-connection.connected {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+/* Power Play Banner */
+.mc-powerplay {
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.mc-powerplay.home {
+  background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+}
+
+.mc-powerplay.away {
+  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+}
+
+.mc-powerplay.even {
+  background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+}
+
+/* Time Section */
+.mc-time-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.mc-period {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.mc-time {
+  font-size: 40px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+
+.mc-shot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(96, 165, 250, 0.15);
+  border-radius: 8px;
+}
+
+.mc-shot.warning {
+  background: rgba(248, 113, 113, 0.2);
+}
+
+.shot-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.shot-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #60a5fa;
+  font-variant-numeric: tabular-nums;
+}
+
+.mc-shot.warning .shot-value {
+  color: #f87171;
+  animation: blink 0.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Timer Controls */
+.mc-timer-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Button Base */
+.mc-btn {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mc-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.mc-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Timer Buttons */
+.timer-btn {
+  flex: 1;
+  font-size: 20px;
+  padding: 16px;
+}
+
+.timer-btn.start {
+  background: #22c55e;
+  color: #fff;
+}
+
+.timer-btn.stop {
+  background: #ef4444;
+  color: #fff;
+}
+
+.reset-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Teams Section */
+.mc-teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.mc-team {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid;
+}
+
+.team-header {
+  padding: 12px;
+  text-align: center;
+}
+
+.team-name {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.team-score {
+  font-size: 64px;
+  font-weight: 900;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.score-controls {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+}
+
+.score-btn {
+  flex: 1;
+  font-size: 32px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.score-btn.plus {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.score-btn.minus {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.possession-btn {
+  margin: 0 12px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  border: 2px solid;
+  font-size: 12px;
+}
+
+.possession-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Faceoff Button */
+.faceoff-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.mc-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.mc-footer p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mc-hint {
+  margin-top: 8px !important;
+  font-style: italic;
+}
+
+/* Landscape adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mobile-control {
+    padding: 8px 16px;
+  }
+
+  .mc-time-section {
+    padding: 8px 16px;
+    margin-bottom: 8px;
+  }
+
+  .mc-time {
+    font-size: 32px;
+  }
+
+  .mc-timer-controls {
+    margin-bottom: 8px;
+  }
+
+  .team-score {
+    font-size: 48px;
+    padding: 4px 0;
+  }
+
+  .score-controls {
+    padding: 8px;
+  }
+
+  .score-btn {
+    font-size: 24px;
+    padding: 8px;
+  }
+}
+
+/* Dark mode safe */
+@media (prefers-color-scheme: dark) {
+  .mobile-control {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+  }
+}
