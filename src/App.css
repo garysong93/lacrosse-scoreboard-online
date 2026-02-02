@@ -10,7 +10,53 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Header */
+/* Quick Action Bar (replaces old header when used with HomePage) */
+.quick-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.quick-action-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quick-action-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.quick-action-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .quick-action-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .quick-action-left {
+    display: none;
+  }
+
+  .quick-action-controls {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Legacy header (kept for backward compatibility) */
 .header {
   display: flex;
   justify-content: space-between;
@@ -174,12 +220,14 @@
 .timer-controls {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 1rem;
 }
 
 .timer-btn {
   padding: 0.75rem 1.5rem;
+  min-height: 48px;
   background: var(--accent-blue);
   border: none;
   border-radius: 0.5rem;
@@ -187,6 +235,24 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile timer controls */
+@media (max-width: 640px) {
+  .timer-controls {
+    gap: 0.75rem;
+  }
+
+  .timer-btn {
+    padding: 1rem 1.25rem;
+    min-height: 52px;
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: 80px;
+  }
 }
 
 .timer-btn:hover {
@@ -234,6 +300,31 @@
   text-align: center;
   padding: 0.5rem 0;
   font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: transform 0.1s;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-score:active {
+  transform: scale(0.98);
+}
+
+/* Mobile score display */
+@media (max-width: 640px) {
+  .team-score {
+    font-size: 4rem;
+    min-height: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-score {
+    font-size: 6rem;
+    min-height: 120px;
+  }
 }
 
 .score-breakdown {
@@ -1052,7 +1143,8 @@
 }
 
 .action-btn.small {
-  padding: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  min-height: 48px; /* Touch-friendly minimum height */
   font-size: 0.75rem;
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
@@ -1061,6 +1153,23 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile optimizations for team actions */
+@media (max-width: 640px) {
+  .team-actions {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .action-btn.small {
+    padding: 1rem 0.75rem;
+    min-height: 56px;
+    font-size: 0.875rem;
+  }
 }
 
 .action-btn.small:hover {
@@ -1747,4 +1856,87 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+
+/* ============================================
+   Mobile Optimizations & Safe Areas
+   ============================================ */
+
+/* Safe area padding for notched phones */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .app {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .quick-action-bar {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 640px) {
+  /* Increase tap target sizes */
+  .header-btn,
+  .header-btn.icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+
+  /* Scrollable header controls on small screens */
+  .quick-action-controls,
+  .header-controls {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .quick-action-controls::-webkit-scrollbar,
+  .header-controls::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Larger possession buttons */
+  .possession-btn,
+  .faceoff-btn {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Better modal scrolling on mobile */
+  .modal {
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .modal.wide-modal {
+    width: calc(100vw - 2rem);
+    max-width: none;
+  }
+}
+
+/* Prevent text selection on interactive elements */
+.team-score,
+.timer-display,
+.shot-clock,
+.possession-btn,
+.faceoff-btn,
+.action-btn,
+.timer-btn {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Active states for touch feedback */
+.action-btn:active,
+.timer-btn:active,
+.possession-btn:active,
+.faceoff-btn:active,
+.header-btn:active {
+  transform: scale(0.97);
+  opacity: 0.9;
 }

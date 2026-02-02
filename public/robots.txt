@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rugbyscoreboardonline.com/sitemap.xml
+Sitemap: https://www.lacrossescoreboard.com/sitemap.xml

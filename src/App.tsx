@@ -338,10 +338,12 @@ function App() {
         onDismissReconnected={onlineStatus.dismissReconnected}
       />
 
-      {/* Header */}
-      <header className="header">
-        <h1 className="header-title">Lacrosse Scoreboard</h1>
-        <div className="header-controls">
+      {/* Quick Action Bar */}
+      <div className="quick-action-bar">
+        <div className="quick-action-left">
+          <span className="quick-action-title">🥍 Lacrosse Scoreboard</span>
+        </div>
+        <div className="quick-action-controls">
           <button className="header-btn icon-btn" onClick={() => window.open('/obs', '_blank')} title="OBS Overlay" tabIndex={-1}>
             🎬
           </button>
@@ -358,7 +360,7 @@ function App() {
           <button className="header-btn icon-btn" onClick={() => setActiveModal('shortcuts')} title="Keyboard Shortcuts" tabIndex={-1}>⌨️</button>
           <button className="header-btn" onClick={() => setActiveModal('settings')}>Settings</button>
         </div>
-      </header>
+      </div>
 
       {/* Connection Badge */}
       {roomStore.isConnected && roomStore.roomId && (
@@ -853,10 +855,6 @@ function App() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="footer">
-        <p>Lacrosse Scoreboard - Free Real-Time Sync</p>
-      </footer>
     </div>
   )
 }

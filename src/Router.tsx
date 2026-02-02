@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
-import App from './App'
+import { HomePage } from './pages/HomePage'
+import { RulesPage } from './pages/RulesPage'
+import { TutorialPage } from './pages/TutorialPage'
+import { FAQPage } from './pages/FAQPage'
 import { OBSOverlayPage } from './components/OBSOverlay'
 import { MobileControlPage } from './components/MobileControl'
 
@@ -15,18 +18,36 @@ export function Router() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
+  // Normalize path (remove trailing slash except for root)
+  const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/\/$/, '')
+
   // OBS Overlay route
-  if (currentPath === '/obs' || currentPath === '/obs/') {
+  if (normalizedPath === '/obs') {
     return <OBSOverlayPage />
   }
 
   // Mobile Control route
-  if (currentPath === '/control' || currentPath === '/control/') {
+  if (normalizedPath === '/control') {
     return <MobileControlPage />
   }
 
-  // Default: Main scoreboard
-  return <App />
+  // Rules page
+  if (normalizedPath === '/rules') {
+    return <RulesPage />
+  }
+
+  // Tutorial page
+  if (normalizedPath === '/tutorial') {
+    return <TutorialPage />
+  }
+
+  // FAQ page
+  if (normalizedPath === '/faq') {
+    return <FAQPage />
+  }
+
+  // Default: Home page with scoreboard
+  return <HomePage />
 }
 
 export default Router
