@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/obs", "destination": "/index.html" },
+    { "source": "/control", "destination": "/index.html" },
+    { "source": "**", "destination": "/index.html" }
+  ]
+}
