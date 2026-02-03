@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MobileDrawer } from './MobileDrawer';
 
 interface HeaderProps {
@@ -7,6 +7,13 @@ interface HeaderProps {
 
 export function Header({ showNav = true }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState('/');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
 
   const navLinks = [
     { href: '/', label: 'Scoreboard' },
@@ -34,7 +41,7 @@ export function Header({ showNav = true }: HeaderProps) {
                   key={link.href}
                   href={link.href}
                   className={`text-sm font-medium transition-colors hover:text-[var(--accent-blue)] ${
-                    window.location.pathname === link.href
+                    currentPath === link.href
                       ? 'text-[var(--accent-blue)]'
                       : 'text-[var(--text-secondary)]'
                   }`}

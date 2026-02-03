@@ -58,6 +58,38 @@ export function HomePage() {
         <meta name="twitter:title" content="Lacrosse Scoreboard Online | Free Score Keeper with Real-Time Sync" />
         <meta name="twitter:description" content="Free online lacrosse scoreboard with real-time sync. NCAA, PLL, NFHS rule presets. Shot clock, penalty timers, player stats, and OBS streaming overlay." />
         <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Lacrosse Scoreboard Online",
+            "description": "Free online lacrosse scoreboard with real-time sync. NCAA, NFHS, NLL, PLL rule presets. Shot clock, penalty timers, and live remote viewing.",
+            "url": "https://www.lacrossescoreboard.com",
+            "applicationCategory": "SportsApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Real-time game sync",
+              "NCAA Men's lacrosse rules",
+              "NCAA Women's lacrosse rules",
+              "NFHS Boys lacrosse rules",
+              "NLL Box lacrosse rules",
+              "PLL lacrosse rules",
+              "Shot clock timer",
+              "Penalty box management",
+              "Power play indicators",
+              "QR code room sharing",
+              "Mobile responsive",
+              "Offline PWA support"
+            ]
+          }
+        `}</script>
       </Helmet>
       {/* Header - hidden in fullscreen */}
       {!isFullscreen && <Header />}
