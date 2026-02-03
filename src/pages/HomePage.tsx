@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import App from '../App';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -40,6 +41,24 @@ export function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)]">
+      <Helmet>
+        <title>Lacrosse Scoreboard Online | Free Score Keeper with Real-Time Sync</title>
+        <meta name="description" content="Free online lacrosse scoreboard with real-time sync. NCAA, PLL, NFHS rule presets. Shot clock, penalty timers, player stats, and OBS streaming overlay." />
+        <link rel="canonical" href="https://www.lacrossescoreboard.com/" />
+
+        {/* Open Graph */}
+        <meta property="og:url" content="https://www.lacrossescoreboard.com/" />
+        <meta property="og:title" content="Lacrosse Scoreboard Online | Free Score Keeper with Real-Time Sync" />
+        <meta property="og:description" content="Free online lacrosse scoreboard with real-time sync. NCAA, PLL, NFHS rule presets. Shot clock, penalty timers, player stats, and OBS streaming overlay." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.lacrossescoreboard.com/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:url" content="https://www.lacrossescoreboard.com/" />
+        <meta name="twitter:title" content="Lacrosse Scoreboard Online | Free Score Keeper with Real-Time Sync" />
+        <meta name="twitter:description" content="Free online lacrosse scoreboard with real-time sync. NCAA, PLL, NFHS rule presets. Shot clock, penalty timers, player stats, and OBS streaming overlay." />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {/* Header - hidden in fullscreen */}
       {!isFullscreen && <Header />}
 

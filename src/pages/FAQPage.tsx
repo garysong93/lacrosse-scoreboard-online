@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -111,8 +112,44 @@ export function FAQPage() {
     ? faqs
     : faqs.filter((faq) => faq.category === activeCategory);
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
+      <Helmet>
+        <title>Lacrosse Scoreboard FAQ | Common Questions Answered</title>
+        <meta name="description" content="Frequently asked questions about our free lacrosse scoreboard. Learn about features, keyboard shortcuts, OBS streaming, offline support, and more." />
+        <link rel="canonical" href="https://www.lacrossescoreboard.com/faq" />
+
+        {/* Open Graph */}
+        <meta property="og:url" content="https://www.lacrossescoreboard.com/faq" />
+        <meta property="og:title" content="Lacrosse Scoreboard FAQ | Common Questions Answered" />
+        <meta property="og:description" content="Frequently asked questions about our free lacrosse scoreboard. Learn about features, keyboard shortcuts, OBS streaming, offline support, and more." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.lacrossescoreboard.com/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:url" content="https://www.lacrossescoreboard.com/faq" />
+        <meta name="twitter:title" content="Lacrosse Scoreboard FAQ | Common Questions Answered" />
+        <meta name="twitter:description" content="Frequently asked questions about our free lacrosse scoreboard. Learn about features, keyboard shortcuts, OBS streaming, offline support, and more." />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        {/* FAQ Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
@@ -176,13 +213,11 @@ export function FAQPage() {
                 </span>
               </button>
 
-              {openIndex === index && (
-                <div className="px-6 pb-4">
-                  <p className="text-[var(--text-secondary)] leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              )}
+              <div className={`px-6 pb-4 ${openIndex === index ? 'block' : 'hidden'}`}>
+                <p className="text-[var(--text-secondary)] leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
             </div>
           ))}
         </div>

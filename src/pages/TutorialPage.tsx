@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -193,6 +194,24 @@ export function TutorialPage() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
+      <Helmet>
+        <title>How to Use Lacrosse Scoreboard | Tutorial & Quick Start Guide</title>
+        <meta name="description" content="Step-by-step tutorial on how to use the free online lacrosse scoreboard. Learn scoring, timer controls, penalty tracking, stats, and OBS streaming setup." />
+        <link rel="canonical" href="https://www.lacrossescoreboard.com/tutorial" />
+
+        {/* Open Graph */}
+        <meta property="og:url" content="https://www.lacrossescoreboard.com/tutorial" />
+        <meta property="og:title" content="How to Use Lacrosse Scoreboard | Tutorial & Quick Start Guide" />
+        <meta property="og:description" content="Step-by-step tutorial on how to use the free online lacrosse scoreboard. Learn scoring, timer controls, penalty tracking, stats, and OBS streaming setup." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.lacrossescoreboard.com/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:url" content="https://www.lacrossescoreboard.com/tutorial" />
+        <meta name="twitter:title" content="How to Use Lacrosse Scoreboard | Tutorial & Quick Start Guide" />
+        <meta name="twitter:description" content="Step-by-step tutorial on how to use the free online lacrosse scoreboard. Learn scoring, timer controls, penalty tracking, stats, and OBS streaming setup." />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">

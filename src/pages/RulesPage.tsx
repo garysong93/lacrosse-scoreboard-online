@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -100,6 +101,24 @@ export function RulesPage() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
+      <Helmet>
+        <title>Lacrosse Rules Guide | Game Format, Penalties & Equipment</title>
+        <meta name="description" content="Complete guide to lacrosse rules including game format, penalties, equipment regulations. NCAA, PLL, high school, and youth lacrosse rules explained." />
+        <link rel="canonical" href="https://www.lacrossescoreboard.com/rules" />
+
+        {/* Open Graph */}
+        <meta property="og:url" content="https://www.lacrossescoreboard.com/rules" />
+        <meta property="og:title" content="Lacrosse Rules Guide | Game Format, Penalties & Equipment" />
+        <meta property="og:description" content="Complete guide to lacrosse rules including game format, penalties, equipment regulations. NCAA, PLL, high school, and youth lacrosse rules explained." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.lacrossescoreboard.com/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:url" content="https://www.lacrossescoreboard.com/rules" />
+        <meta name="twitter:title" content="Lacrosse Rules Guide | Game Format, Penalties & Equipment" />
+        <meta name="twitter:description" content="Complete guide to lacrosse rules including game format, penalties, equipment regulations. NCAA, PLL, high school, and youth lacrosse rules explained." />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
